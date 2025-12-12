@@ -1,9 +1,15 @@
+:root{
+  --panel-bg: rgba(15, 20, 35, 0.78);
+  --panel-border: rgba(255, 255, 255, 0.12);
+}
+
 body {
   margin: 0;
   overflow: hidden;
   background: #000;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: #e0e0e0;
+  touch-action: none; /* 모바일 터치 스크롤로 캔버스가 깨지는 것 방지 */
 }
 
 #scene-container {
@@ -15,26 +21,20 @@ body {
   position: absolute;
   top: 16px;
   right: 16px;
-  width: 260px;
+  width: 280px;
   padding: 14px 14px 12px;
-  background: rgba(15, 20, 35, 0.78);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.45);
   backdrop-filter: blur(8px);
+  z-index: 10;
 }
 
-#controls h3 {
-  margin: 0 0 10px;
-  font-size: 16px;
-}
-
-.row {
-  margin: 10px 0;
-}
+#controls h3 { margin: 0 0 10px; font-size: 16px; }
+.row { margin: 10px 0; }
 
 .btn {
-  display: inline-block;
   padding: 7px 10px;
   margin-right: 6px;
   border-radius: 10px;
@@ -44,30 +44,14 @@ body {
   cursor: pointer;
   font-size: 12px;
 }
-
-.btn:hover {
-  background: rgba(255,255,255,0.10);
-}
-
+.btn:hover { background: rgba(255,255,255,0.10); }
 .btn.active {
   background: rgba(120,160,255,0.22);
   border-color: rgba(120,160,255,0.35);
 }
 
-label {
-  display: block;
-  font-size: 12px;
-  margin-bottom: 6px;
-  opacity: 0.9;
-}
-
-.chk {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  font-size: 12px;
-  opacity: 0.95;
-}
+label { display: block; font-size: 12px; margin-bottom: 6px; opacity: 0.9; }
+.chk { display: flex; gap: 8px; align-items: center; font-size: 12px; opacity: 0.95; }
 
 input[type="range"] {
   width: 100%;
@@ -77,11 +61,9 @@ input[type="range"] {
   border-radius: 3px;
   outline: none;
 }
-
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
-  width: 14px;
-  height: 14px;
+  width: 14px; height: 14px;
   border-radius: 50%;
   background: #a0c0ff;
   cursor: pointer;
@@ -99,6 +81,97 @@ input[type="range"]::-webkit-slider-thumb {
 #hud {
   margin-top: 10px;
   font-size: 11px;
-  opacity: 0.9;
+  opacity: 0.95;
   white-space: pre-line;
+}
+
+/* ---- 모바일 UI ---- */
+#mobile-ui {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none; /* 버튼만 예외로 pointer-events 켬 */
+}
+
+#mobile-ui.hide { display: none; }
+
+#joystick-area {
+  position: absolute;
+  left: env(safe-area-inset-left, 0px);
+  bottom: env(safe-area-inset-bottom, 0px);
+  width: 45vw;
+  height: 45vh;
+  pointer-events: none;
+}
+#joystick-base {
+  position: absolute;
+  left: 16px; bottom: 16px;
+  width: 120px; height: 120px;
+  border-radius: 60px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  pointer-events: auto;
+  touch-action: none;
+}
+#joystick-stick {
+  position: absolute;
+  left: 44px; top: 44px;
+  width: 32px; height: 32px;
+  border-radius: 16px;
+  background: rgba(160,192,255,0.7);
+  border: 1px solid rgba(160,192,255,0.9);
+}
+
+#touch-area {
+  position: absolute;
+  right: env(safe-area-inset-right, 0px);
+  bottom: env(safe-area-inset-bottom, 0px);
+  width: 55vw;
+  height: 55vh;
+  pointer-events: auto;
+  touch-action: none;
+}
+
+.mrow{
+  position: absolute;
+  right: 16px;
+  display: flex;
+  gap: 10px;
+}
+
+.mrow:nth-child(1){ bottom: 86px; }
+.mrow:nth-child(2){ bottom: 16px; }
+
+.mbtn{
+  width: 92px;
+  height: 52px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.07);
+  color: #eaeaea;
+  font-weight: 600;
+  pointer-events: auto;
+}
+
+#toast{
+  position: absolute;
+  left: 50%;
+  top: 18px;
+  transform: translateX(-50%);
+  padding: 10px 14px;
+  background: rgba(0,0,0,0.65);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 14px;
+  font-size: 12px;
+  pointer-events: none;
+}
+#toast.hide{ display: none; }
+
+/* 모바일에서는 패널을 작게 */
+@media (max-width: 900px){
+  #controls{
+    top: 10px; right: 10px;
+    width: 250px;
+    padding: 12px;
+  }
 }
