@@ -2,15 +2,16 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>우주 탐사 시뮬레이션</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <title>Space Explorer</title>
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
   <div id="scene-container"></div>
 
+  <!-- 우측 패널 -->
   <div id="controls">
-    <h3>🚀 우주 탐사 제어</h3>
+    <h3>🚀 Space Explorer</h3>
 
     <div class="row">
       <button id="mode-orbit" class="btn active">🪐 ORBIT</button>
@@ -26,24 +27,42 @@
     </div>
 
     <div class="row">
-      <label for="zoom-slider">확대/축소:</label>
+      <label for="zoom-slider">확대/축소</label>
       <input type="range" id="zoom-slider" min="1" max="100" value="50">
     </div>
 
     <div class="row">
-      <label for="speed-slider">시간 속도:</label>
+      <label for="speed-slider">시간 속도</label>
       <input type="range" id="speed-slider" min="0" max="40" value="10" step="0.5">
     </div>
 
     <div class="hint">
-      <div><b>SHIP 모드 조작</b></div>
-      <div>W/S 전진/후진 · A/D 좌/우</div>
-      <div>Q/E 상승/하강 · ←/→ 요(Yaw) · ↑/↓ 피치(Pitch)</div>
-      <div>Shift 부스트 · Space 브레이크 · C 1인칭/3인칭</div>
-      <div>행성 클릭: 자동 포커스 &amp; 추적</div>
+      <div><b>미션</b> : 행성 근처에 접근해 “스캔” 완료 + 주변 이상현상(✨) 수집</div>
+      <div><b>PC</b> : WASD 이동 / 화살표 회전 / Shift 부스트 / Space 브레이크 / C 시점</div>
+      <div><b>모바일</b> : 왼쪽 조이스틱 이동 + 오른쪽 드래그로 시점</div>
     </div>
 
     <div id="hud"></div>
+  </div>
+
+  <!-- 모바일 조작 UI -->
+  <div id="mobile-ui" class="hide">
+    <div id="joystick-area">
+      <div id="joystick-base"><div id="joystick-stick"></div></div>
+    </div>
+
+    <div id="touch-area">
+      <div class="mrow">
+        <button id="m-boost" class="mbtn">BOOST</button>
+        <button id="m-brake" class="mbtn">BRAKE</button>
+      </div>
+      <div class="mrow">
+        <button id="m-cam" class="mbtn">CAM</button>
+        <button id="m-mode" class="mbtn">MODE</button>
+      </div>
+    </div>
+
+    <div id="toast" class="hide"></div>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
